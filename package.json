@@ -6,11 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --file \"src/**/*.{tsx,ts}\"",
-    "format": "prettier --write src/**/*.{tsx,ts,css}",
-    "stylelint": "stylelint \"src/**/*.{css,scss}\" --fix"
+    "lint": "next lint --file \"{pages,lib,components}/**/*.{tsx,ts}\"",
+    "format": "prettier --write",
+    "stylelint": "stylelint --fix"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-slot": "^1.2.3",
     "@rainbow-me/rainbowkit": "^2.2.5",
     "@tanstack/react-query": "^5.77.2",
@@ -20,9 +23,11 @@
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.4",
     "tailwind-merge": "^3.3.0",
     "viem": "2.x",
-    "wagmi": "^2.15.4"
+    "wagmi": "^2.15.4",
+    "zod": "^3.25.32"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -48,13 +53,13 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "src/**/*.{tsx,ts}": [
+    "{pages,lib,components}/**/*.{tsx,ts}": [
       "pnpm lint"
     ],
-    "src/**/*.{css,scss}": [
+    "{pages,lib,components,styles}/**/*.{css,scss}": [
       "pnpm stylelint"
     ],
-    "src/**/*.{tsx,ts,css,scss}": [
+    "styles/**/*.{tsx,ts,css,scss}": [
       "pnpm format"
     ]
   }
