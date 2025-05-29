@@ -1,5 +1,3 @@
-'use client';
-
 import {
 	FormField,
 	FormItem,
@@ -12,9 +10,15 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useEffect, useState } from 'react';
 
 const Swap = () => {
 	const { isConnected } = useAccount();
+	const [connected, setConnected] = useState(false);
+
+	useEffect(() => {
+		setConnected(isConnected);
+	}, [isConnected]);
 
 	const form = useForm({
 		defaultValues: {
@@ -51,7 +55,7 @@ const Swap = () => {
 								</FormItem>
 							)}
 						/>
-						{isConnected ? (
+						{connected ? (
 							<Button type="submit" className="mt-[25px] w-full">
 								Submit
 							</Button>
