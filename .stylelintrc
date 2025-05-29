@@ -11,6 +11,7 @@
         ]
       }
     ],
-    "at-rule-no-deprecated": null
+    "at-rule-no-deprecated": null,
+    "import-notation": "string"
   }
 }
