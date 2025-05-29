@@ -121,3 +121,9 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+html,
+body,
+div[data-rk] {
+	height: 100vh;
+}

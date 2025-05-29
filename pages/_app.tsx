@@ -18,7 +18,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 					<Header>
 						<ConnectButton />
 					</Header>
-					<Component {...pageProps} />
+					<div style={{ height: 'calc(100vh - 75px)' }}>
+						<Component {...pageProps} />
+					</div>
 				</RainbowKitProvider>
 			</QueryClientProvider>
 		</WagmiProvider>

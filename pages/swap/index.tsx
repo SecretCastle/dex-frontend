@@ -11,7 +11,6 @@ import { useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useEffect, useState } from 'react';
-
 const Swap = () => {
 	const { isConnected } = useAccount();
 	const [connected, setConnected] = useState(false);
@@ -20,17 +19,24 @@ const Swap = () => {
 		setConnected(isConnected);
 	}, [isConnected]);
 
-	const form = useForm({
+	const form = useForm<{ from: string; to: string }>({
 		defaultValues: {
 			from: '',
 			to: ''
 		}
 	});
+
+	function onSubmit(data: unknown) {
+		console.log('Form submitted:', data);
+	}
 	return (
-		<div className="container flex flex-row items-center justify-center">
-			<div className="dialog w-[500px]">
+		<div className="container mx-auto flex flex-row items-center justify-center pt-[150px]">
+			<div className="dialog w-[500px] rounded-xl bg-gray-50 p-[25px] shadow-xl">
 				<Form {...form}>
-					<form className="flex flex-col justify-center gap-y-[15px]">
+					<form
+						className="flex flex-col justify-center gap-y-[35px]"
+						onSubmit={form.handleSubmit(onSubmit)}
+					>
 						<FormField
 							control={form.control}
 							name="from"
@@ -38,7 +44,11 @@ const Swap = () => {
 								<FormItem>
 									<FormLabel>From</FormLabel>
 									<FormControl>
-										<Input placeholder="From" {...field} />
+										<Input
+											type="number"
+											placeholder="From"
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -50,13 +60,21 @@ const Swap = () => {
 								<FormItem>
 									<FormLabel>To</FormLabel>
 									<FormControl>
-										<Input placeholder="To" {...field} />
+										<Input
+											type="number"
+											placeholder="To"
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
 						/>
 						{connected ? (
-							<Button type="submit" className="mt-[25px] w-full">
+							<Button
+								size="lg"
+								type="submit"
+								className="mt-[25px] w-full"
+							>
 								Submit
 							</Button>
 						) : (
