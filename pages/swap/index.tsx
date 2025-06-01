@@ -11,12 +11,22 @@ import { useForm } from 'react-hook-form';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useEffect, useState } from 'react';
+import { TokenList } from '@/components/common/token';
+import { fetchDemo } from '@/service/graph';
+
 const Swap = () => {
 	const { isConnected } = useAccount();
 	const [connected, setConnected] = useState(false);
+	const [state, setState] = useState({
+		fromTarget: '1',
+		toTarget: '2'
+	});
 
 	useEffect(() => {
 		setConnected(isConnected);
+		return () => {
+			setConnected(false);
+		};
 	}, [isConnected]);
 
 	const form = useForm<{ from: string; to: string }>({
@@ -28,7 +38,9 @@ const Swap = () => {
 
 	function onSubmit(data: unknown) {
 		console.log('Form submitted:', data);
+		fetchDemo();
 	}
+
 	return (
 		<div className="container mx-auto flex flex-row items-center justify-center pt-[150px]">
 			<div className="dialog w-[500px] rounded-xl bg-gray-50 p-[25px] shadow-xl">
@@ -42,7 +54,17 @@ const Swap = () => {
 							name="from"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>From</FormLabel>
+									<FormLabel>
+										<TokenList
+											defaultValue={state.fromTarget}
+											onChange={(value) =>
+												setState({
+													...state,
+													fromTarget: value
+												})
+											}
+										/>
+									</FormLabel>
 									<FormControl>
 										<Input
 											type="number"
@@ -58,7 +80,17 @@ const Swap = () => {
 							name="to"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>To</FormLabel>
+									<FormLabel>
+										<TokenList
+											defaultValue={state.toTarget}
+											onChange={(value) =>
+												setState({
+													...state,
+													toTarget: value
+												})
+											}
+										/>
+									</FormLabel>
 									<FormControl>
 										<Input
 											type="number"
@@ -73,9 +105,9 @@ const Swap = () => {
 							<Button
 								size="lg"
 								type="submit"
-								className="mt-[25px] w-full"
+								className="mt-[15px] w-full"
 							>
-								Submit
+								Swap
 							</Button>
 						) : (
 							<ConnectButton />

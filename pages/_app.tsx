@@ -7,22 +7,28 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import Header from '@/layouts/header';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Head from 'next/head';
 
 const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<WagmiProvider config={config}>
-			<QueryClientProvider client={queryClient}>
-				<RainbowKitProvider>
-					<Header>
-						<ConnectButton />
-					</Header>
-					<div style={{ height: 'calc(100vh - 75px)' }}>
-						<Component {...pageProps} />
-					</div>
-				</RainbowKitProvider>
-			</QueryClientProvider>
-		</WagmiProvider>
+		<>
+			<Head>
+				<title>DarisX Web3</title>
+			</Head>
+			<WagmiProvider config={config}>
+				<QueryClientProvider client={queryClient}>
+					<RainbowKitProvider>
+						<Header>
+							<ConnectButton />
+						</Header>
+						<div style={{ height: 'calc(100vh - 75px)' }}>
+							<Component {...pageProps} />
+						</div>
+					</RainbowKitProvider>
+				</QueryClientProvider>
+			</WagmiProvider>
+		</>
 	);
 }

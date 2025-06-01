@@ -5,7 +5,6 @@ import {
 	NavigationMenuItem,
 	NavigationMenuLink
 } from '@/components/ui/navigation-menu';
-import Link from 'next/link';
 
 const Header = ({ children }: ChildrenProps) => {
 	return (
@@ -28,6 +27,14 @@ const Header = ({ children }: ChildrenProps) => {
 								className="px-4 py-1 hover:bg-amber-100"
 							>
 								Pool
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink
+								href="/market"
+								className="px-4 py-1 hover:bg-amber-100"
+							>
+								NFTMarket
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 					</NavigationMenuList>
