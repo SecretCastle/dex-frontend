@@ -10,7 +10,7 @@ export const DarisXChain = defineChain({
 	name: 'DarisX Chain',
 	nativeCurrency: {
 		name: 'DarisX',
-		symbol: 'DX',
+		symbol: 'MKT',
 		decimals: 18
 	},
 	rpcUrls: {

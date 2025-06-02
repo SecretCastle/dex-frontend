@@ -195,6 +195,31 @@ export default [
 			{
 				indexed: true,
 				internalType: 'address',
+				name: 'owner',
+				type: 'address'
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256'
+			},
+			{
+				indexed: false,
+				internalType: 'string',
+				name: 'tokenURI',
+				type: 'string'
+			}
+		],
+		name: 'NFTMinted',
+		type: 'event'
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
 				name: 'from',
 				type: 'address'
 			},
@@ -213,6 +238,37 @@ export default [
 		],
 		name: 'Transfer',
 		type: 'event'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'from',
+				type: 'address'
+			}
+		],
+		name: 'NFTLists',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'tokenId',
+						type: 'uint256'
+					},
+					{
+						internalType: 'string',
+						name: 'tokenURI',
+						type: 'string'
+					}
+				],
+				internalType: 'struct MyNFT.NFTInfo[]',
+				name: '',
+				type: 'tuple[]'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
 	},
 	{
 		inputs: [

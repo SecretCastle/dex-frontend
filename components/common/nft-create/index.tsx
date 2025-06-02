@@ -10,51 +10,32 @@ import {
 import { Input } from '@/components/ui/input';
 import { NFT_ADDRESS } from '@/contracts/address';
 import React, { useEffect } from 'react';
-import {
-	useAccount,
-	useBalance,
-	useWaitForTransactionReceipt,
-	useWriteContract
-} from 'wagmi';
+import { useAccount, useBalance, useWriteContract } from 'wagmi';
 import NFT_ABI from '@/contracts/nft-abi/MyNFT-abi';
 
-const CreateNFT = ({ children }: Readonly<{ children?: React.ReactNode }>) => {
+const CreateNFT = ({
+	children
+}: Readonly<{ children?: React.ReactNode; onCreated?: () => void }>) => {
 	const [open, setOpen] = React.useState(false);
 	const [tokenURI, setTokenURI] = React.useState(
 		'http://qiniu.pic.ineet.cn/image/jpg/blog-bg.jpg'
 	);
 	const { address } = useAccount();
 	const { isPending } = useBalance();
-	const { data: hash, writeContract, error } = useWriteContract();
-	const { isSuccess } = useWaitForTransactionReceipt({
-		hash
-	});
+	const { writeContractAsync, error } = useWriteContract();
 
 	const onClickHandler = async () => {
 		if (!tokenURI) {
 			alert('Please enter a valid Token URI');
 			return;
 		}
-		writeContract({
+		await writeContractAsync({
 			abi: NFT_ABI,
 			address: NFT_ADDRESS,
 			functionName: 'mintNFT',
 			args: [address as `0x${string}`, tokenURI]
 		});
 	};
-
-	useEffect(() => {
-		if (isSuccess) {
-			setTokenURI('http://qiniu.pic.ineet.cn/image/jpg/blog-bg.jpg');
-			setOpen(false);
-			alert('NFT published successfully!');
-		}
-		return () => {
-			// Reset state or perform cleanup if necessary
-			setTokenURI('http://qiniu.pic.ineet.cn/image/jpg/blog-bg.jpg');
-			setOpen(false);
-		};
-	}, [isSuccess]);
 
 	useEffect(() => {
 		if (error && error.name === 'ContractFunctionExecutionError') {
@@ -78,13 +59,13 @@ const CreateNFT = ({ children }: Readonly<{ children?: React.ReactNode }>) => {
 			<DialogTrigger asChild>
 				{children ?? (
 					<Button className="cursor-pointer hover:bg-amber-500 hover:text-white">
-						Publish NFT
+						Create NFT
 					</Button>
 				)}
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Publish NFT</DialogTitle>
+					<DialogTitle>Create NFT</DialogTitle>
 				</DialogHeader>
 				<div className="flex flex-col gap-y-[8px]">
 					<label>Token URI</label>
