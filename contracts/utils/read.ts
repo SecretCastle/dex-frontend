@@ -14,15 +14,19 @@ export const _readMarketContract = async (
 		| 'getListing'
 		| 'listings'
 		| 'paymentToken',
+	address: `0x${string}`,
 	args?: MarketContractArgs
 ): Promise<[]> => {
-	const result = (await readContract(config, {
+	if (!address) {
+		return [];
+	}
+	return (await readContract(config, {
 		abi: Market_ABI,
 		address: MARKET_ADDRESS,
 		functionName: methodName,
 		args: args,
+		account: address
 	})) as unknown as [];
-	return result;
 };
 
 type NFTContractArgs =
@@ -45,13 +49,17 @@ export const _readNFTContract = async (
 		| 'supportsInterface'
 		| 'tokenCounter'
 		| 'totalSupply',
+	address: `0x${string}`,
 	args?: NFTContractArgs
 ): Promise<[]> => {
-	const result = (await readContract(config, {
+	if (!address) {
+		return [];
+	}
+	return (await readContract(config, {
 		abi: NFT_ABI,
 		address: NFT_ADDRESS,
 		functionName: methodName,
-		args: args
+		args: args,
+		account: address
 	})) as unknown as [];
-	return result;
 };
